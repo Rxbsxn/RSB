@@ -26,5 +26,22 @@ namespace RetroShop.Services
     {
       return _users.Find<User>(user => user.Id == id).FirstOrDefault();
     }
+
+    public User Create(User user)
+    {
+      _users.InsertOne(user);
+      return user;
+    }
+
+    public User Update(string id, User newUser)
+    {
+      _users.ReplaceOne(user => user.Id == id, newUser);
+      return newUser;
+    }
+
+    public void Remove(string id)
+    {
+      _users.DeleteOne(user => user.Id == id);
+    }
   }
 }
