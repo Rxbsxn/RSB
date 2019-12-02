@@ -31,6 +31,9 @@
         </e>
         <e p="RetroShop.csproj" t="IncludeRecursive" />
         <e p="Startup.cs" t="Include" />
+        <e p="Utils" t="Include">
+          <e p="IDatabaseSettings.cs" t="Include" />
+        </e>
       </e>
       <e p="RetroShop.sln" t="IncludeFlat" />
     </e>
