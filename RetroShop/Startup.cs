@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using RetroShop.Services;
+using RetroShop.Utils;
 
 namespace RetroShop
 {
@@ -25,7 +27,16 @@ namespace RetroShop
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+      services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
+      services
+        .AddSingleton<IDatabaseSettings>(singleton =>
+          singleton.GetRequiredService<IOptions<DatabaseSettings>>().Value
+        )
+        .AddSingleton<UserService>();
+      
+      services
+        .AddMvc()
+        .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
