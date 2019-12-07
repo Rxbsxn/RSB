@@ -14,7 +14,7 @@ namespace RetroShop.Services
       var client = new MongoClient(settings.ConnectionString);
       var database = client.GetDatabase(settings.DatabaseName);
 
-      _users = database.GetCollection<User>(settings.UserCollection);
+      _users = database.GetCollection<User>("User");
     }
 
     public List<User> Get()
@@ -37,6 +37,11 @@ namespace RetroShop.Services
     {
       _users.ReplaceOne(user => user.Id == id, newUser);
       return newUser;
+    }
+
+    public void Remove(User userToDelete)
+    {
+      _users.DeleteOne(user => user.Id == userToDelete.Id);
     }
 
     public void Remove(string id)
