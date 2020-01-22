@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RetroShop.Models;
+using RetroShop.Requests;
 using RetroShop.Services;
 
 namespace RetroShop.Controllers
@@ -44,8 +45,9 @@ namespace RetroShop.Controllers
     }
 
     [HttpPut("{id:length(24)}")]
-    public IActionResult Update(string id, User newUser)
+    public IActionResult Update(string id, UserRequest newUserRequest)
     {
+      var newUser = new User(id, newUserRequest.FirstName);
       var user = _userService.Get(id);
 
       if (user == null)
