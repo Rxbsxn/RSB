@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -12,13 +14,15 @@ namespace RetroShop.Models
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
+    public ICollection<Auction> Auctions { get; set; }
 
-    public User(string id, string firstName, string lastName, string email)
+    public User(string id, string firstName, string lastName, string email, ICollection<Auction> auctions = null)
     {
       Id = id;
       FirstName = firstName;
       LastName = lastName;
       Email = email;
+      Auctions = auctions ?? new List<Auction>();
     }
 
     public User(string id, string firstName)
