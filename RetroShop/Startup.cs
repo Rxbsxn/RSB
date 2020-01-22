@@ -32,7 +32,8 @@ namespace RetroShop
         .AddSingleton<IDatabaseSettings>(singleton =>
           singleton.GetRequiredService<IOptions<DatabaseSettings>>().Value
         )
-        .AddSingleton<UserService>();
+        .AddSingleton<UserService>()
+        .AddSingleton<AuctionService>();
       
       services
         .AddMvc()
