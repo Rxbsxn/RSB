@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using RetroShop.Models;
 using RetroShop.Utils;
@@ -33,10 +35,9 @@ namespace RetroShop.Services
       return user;
     }
 
-    public User Update(string id, User newUser)
+    public void Update(string id, User newUser)
     {
       _users.ReplaceOne(user => user.Id == id, newUser);
-      return newUser;
     }
 
     public void Remove(User userToDelete)
