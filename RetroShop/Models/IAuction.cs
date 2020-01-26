@@ -1,3 +1,5 @@
+using MongoDB.Bson;
+
 namespace RetroShop.Models
 {
   public interface IAuction
@@ -5,7 +7,7 @@ namespace RetroShop.Models
     string Id { get; set; }
     string Name { get; set; }
     string Description { get; set; }
-    User Owner { get; set; }
+    ObjectId OwnerId { get; set; }
     int Price { get; set; }
     
   }

@@ -14,15 +14,15 @@ namespace RetroShop.Models
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
-    public ICollection<Auction> Auctions { get; set; }
+    public ICollection<ObjectId> Auctions { get; set; }
 
-    public User(string id, string firstName, string lastName, string email, ICollection<Auction> auctions = null)
+    public User(string id, string firstName, string lastName, string email, ICollection<ObjectId> auctions = null)
     {
       Id = id;
       FirstName = firstName;
       LastName = lastName;
       Email = email;
-      Auctions = auctions ?? new List<Auction>();
+      Auctions = auctions ?? new List<ObjectId>();
     }
 
     public User(string id, string firstName)
