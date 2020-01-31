@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using RetroShop.Models;
 using RetroShop.Requests;
 using RetroShop.Services;
@@ -12,10 +14,12 @@ namespace RetroShop.Controllers
   public class AuctionsController : ControllerBase
   {
     private readonly AuctionService _auctionService;
+    private readonly UserService _userService;
 
-    public AuctionsController(AuctionService auctionService)
+    public AuctionsController(AuctionService auctionService, UserService userService)
     {
       _auctionService = auctionService;
+      _userService = userService;
     }
 
     [HttpGet]
@@ -45,17 +49,22 @@ namespace RetroShop.Controllers
     }
 
     [HttpPut("{id:length(24)}")]
-    public IActionResult Update(string id, UserRequest newUserRequest)
+    public IActionResult Update(string id, AuctionRequest newAuctionAuctionRequest)
     {
-      var newUser = new User(id, newUserRequest.FirstName);
-      var user = _auctionService.Get(id);
+      var auction = _auctionService.Get(id);
 
-      if (user == null)
+      if (auction == null)
       {
         return NotFound();
       }
       
-//      _auctionService.Update(id, newUser); TODO
+      var newAuction = new Auction(id, newAuctionAuctionRequest.Name, newAuctionAuctionRequest.Description, newAuctionAuctionRequest.OwnerId, newAuctionAuctionRequest.Price);
+      _auctionService.Update(id, newAuction);
+
+      var creator = _userService.Get(newAuctionAuctionRequest.OwnerId);
+      creator?.Auctions.Add(new ObjectId(id));
+      
+      _userService.Update(newAuctionAuctionRequest.OwnerId, creator);
 
       return NoContent();
     }

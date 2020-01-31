@@ -24,11 +24,5 @@ namespace RetroShop.Models
       Email = email;
       Auctions = auctions ?? new List<ObjectId>();
     }
-
-    public User(string id, string firstName)
-    {
-      Id = id;
-      FirstName = firstName;
-    }
   }
 }

@@ -35,6 +35,11 @@ namespace RetroShop
         .AddSingleton<UserService>()
         .AddSingleton<AuctionService>();
       
+      services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+      {
+        builder.WithOrigins("http://localhost:5001").AllowAnyMethod().AllowAnyHeader();
+      }));
+      
       services
         .AddMvc()
         .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -53,6 +58,11 @@ namespace RetroShop
         app.UseHsts();
       }
 
+      app.UseCors(builder => 
+        builder
+          .AllowAnyMethod()
+          .AllowAnyOrigin()
+          .AllowAnyHeader());
       app.UseHttpsRedirection();
       app.UseMvc();
     }

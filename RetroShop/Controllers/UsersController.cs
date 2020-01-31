@@ -47,7 +47,6 @@ namespace RetroShop.Controllers
     [HttpPut("{id:length(24)}")]
     public IActionResult Update(string id, UserRequest newUserRequest)
     {
-      var newUser = new User(id, newUserRequest.FirstName);
       var user = _userService.Get(id);
 
       if (user == null)
@@ -55,6 +54,7 @@ namespace RetroShop.Controllers
         return NotFound();
       }
       
+      var newUser = new User(id, newUserRequest.FirstName, newUserRequest.LastName, newUserRequest.Email, user.Auctions);
       _userService.Update(id, newUser);
 
       return NoContent();
